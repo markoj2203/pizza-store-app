@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { MenuModule} from './menu/menu.module';
 import { MenuComponent } from './menu/containers/menu/menu.component';
 
 const routes: Routes = [
@@ -28,7 +27,6 @@ const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes),
     SharedModule,
-    MenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]
