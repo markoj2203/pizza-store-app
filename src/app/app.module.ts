@@ -8,6 +8,7 @@ import { MenuComponent } from './menu/containers/menu/menu.component';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MenuService} from './menu/menu.service';
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,6 +26,7 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     MenuComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
