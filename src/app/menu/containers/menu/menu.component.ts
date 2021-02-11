@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuService } from '../../menu.service';
+import { IEmenu } from '../../model/IEmenu';
+import * as _ from 'lodash';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-menu',
@@ -7,9 +11,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  menuData:IEmenu[] = [];
+  
+  constructor(private _menuService: MenuService) { }
 
   ngOnInit(): void {
+    
+    this._menuService.getMenuData()
+    .subscribe(data => {
+      this.menuData = data;
+
+      const mappedEvents = this.menuData.map(item => {
+        moment(item.date).format('DD/MM/YY HH:mm'); 
+        item = { ...item, date: moment(item.date).format('DD/MM/YY HH:mm') };
+        return item;
+      });
+     _.sortBy(mappedEvents);
+
+     this.menuData = mappedEvents;
+
+      return this.menuData;
+
+    });
+    
   }
 
 }

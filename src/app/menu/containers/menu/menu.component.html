@@ -2,29 +2,18 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">name</th>
+        <th scope="col">size</th>
+        <th scope="col">price</th>
+        <th scope="col">date added</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
+      <tr *ngFor="let menuItem of menuData">
+        <td>{{ menuItem.name }}</td>
+        <td>{{ menuItem.size }}</td>
+        <td>{{ menuItem.price }}</td>
+        <td>{{ menuItem.date }}</td>
       </tr>
     </tbody>
   </table>

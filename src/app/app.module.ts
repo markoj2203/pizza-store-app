@@ -5,6 +5,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { MenuComponent } from './menu/containers/menu/menu.component';
+import { HttpClientModule } from '@angular/common/http';
+
+import { MenuService} from './menu/menu.service';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -27,8 +30,9 @@ const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes),
     SharedModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [MenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
