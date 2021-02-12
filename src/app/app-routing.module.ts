@@ -5,8 +5,6 @@ import { HomeJumbotronComponent } from './home/components/home-jumbotron/home-ju
 import { HomeOwnedServiceComponent } from './home/components/home-owned-service/home-owned-service.component';
 import { MenuComponent } from './menu/containers/menu/menu.component';
 
- 
-
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
     {
