@@ -1,38 +1,30 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
+
+import { AppRoutingModule, routingComponents} from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { MenuComponent } from './menu/containers/menu/menu.component';
 import { HttpClientModule } from '@angular/common/http';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { MenuService} from './menu/menu.service';
-import { SearchComponent } from './search/search.component';
+import { FormsModule } from '@angular/forms';
 
-const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
-  },
-  {
-    path: 'menu',
-    loadChildren: () => import('./menu/menu.module').then(m => m.MenuModule)
-  },
-];
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
-    SearchComponent,
+    routingComponents
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes),
+    AppRoutingModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    Ng2SearchPipeModule,
+    FormsModule
   ],
   providers: [MenuService],
   bootstrap: [AppComponent]

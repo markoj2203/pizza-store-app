@@ -1,5 +1,15 @@
 <div class="container mb-10">
-  <app-search></app-search>
+  <div class="form-outline">
+    <input
+      type="search"
+      id="form1"
+      class="form-control"
+      placeholder="Search menu items"
+      aria-label="Search"
+      [(ngModel)]="name"
+      (ngModelChange)="Search()"
+    />
+  </div>
   <table class="table">
     <thead>
       <tr>

@@ -12,11 +12,15 @@ import * as moment from 'moment';
 export class MenuComponent implements OnInit {
 
   menuData:IEmenu[] = [];
-  
+  name:any;
+
   constructor(private _menuService: MenuService) { }
 
   ngOnInit(): void {
-    
+    this.getData();
+  }
+
+  getData(){
     this._menuService.getMenuData()
     .subscribe(data => {
       this.menuData = data;
@@ -33,7 +37,15 @@ export class MenuComponent implements OnInit {
       return this.menuData;
 
     });
-    
   }
 
+  Search(){
+    if(this.name == ""){
+      this.ngOnInit();
+    }else{
+      this.menuData = this.menuData.filter(res => {
+        return res.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase());
+      });
+    }
+  }
 }
