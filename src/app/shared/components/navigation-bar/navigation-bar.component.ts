@@ -12,7 +12,7 @@ export class NavigationBarComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.classCheck = true;
+      this.classCheck = true; 
   }
 
   toggleClass(event:any){  

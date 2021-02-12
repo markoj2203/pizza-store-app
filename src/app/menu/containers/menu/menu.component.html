@@ -28,4 +28,70 @@
       </tr>
     </tbody>
   </table>
+  <button type="button" class="btn btn-primary" (click)="open(content)">
+    Add
+  </button>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add new item</h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="formGroupExampleInput">Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="pizzaName"
+            placeholder="Enter pizza name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="formGroupExampleInput2">Slug:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="pizzaSlug"
+            placeholder="Enter pizza slug"
+          />
+        </div>
+        <div class="form-group">
+          <label for="pizzaSize">Size:</label>
+          <select id="pizzaSize" class="form-control">
+            <option selected>Select pizza size</option>
+            <option>23</option>
+            <option>35</option>
+            <option>50</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pizzaPrice">Price:</label>
+          <input
+            type="number"
+            class="form-control"
+            id="pizzaPrice"
+            placeholder="Enter pizza price"
+          />
+        </div>
+        <button
+          type="button"
+          class="btn btn-light"
+          (click)="modal.dismiss('Cross click')"
+        >
+          Cancel
+        </button>
+        <button type="button" class="btn btn-primary" (click)="open(content)">
+          Add
+        </button>
+      </form>
+    </div>
+  </ng-template>
 </div>

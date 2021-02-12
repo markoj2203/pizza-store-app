@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../menu.service';
 import { IEmenu } from '../../model/IEmenu';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -13,8 +14,9 @@ export class MenuComponent implements OnInit {
 
   menuData:IEmenu[] = [];
   name:any;
-
-  constructor(private _menuService: MenuService) { }
+  closeResult = '';
+  
+  constructor(private modalService: NgbModal, private _menuService: MenuService) { }
 
   ngOnInit(): void {
     this.getData();
@@ -30,15 +32,14 @@ export class MenuComponent implements OnInit {
         item = { ...item, date: moment(item.date).format('DD/MM/YY HH:mm') };
         return item;
       });
-     _.sortBy(mappedEvents);
 
-     this.menuData = mappedEvents;
+      this.menuData = mappedEvents;
 
       return this.menuData;
 
     });
   }
-
+  
   Search(){
     if(this.name == ""){
       this.ngOnInit();
@@ -48,4 +49,23 @@ export class MenuComponent implements OnInit {
       });
     }
   }
+
+  open(content:any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
 }

@@ -4,6 +4,8 @@ import { HomeComponent } from './home/containers/home/home.component';
 import { HomeJumbotronComponent } from './home/components/home-jumbotron/home-jumbotron.component';
 import { HomeOwnedServiceComponent } from './home/components/home-owned-service/home-owned-service.component';
 import { MenuComponent } from './menu/containers/menu/menu.component';
+import { NgbdModalBasic } from './modal-basic';
+
 
 const routes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -23,4 +25,4 @@ const routes: Routes = [
   })
 
   export class AppRoutingModule {};
-  export const routingComponents = [HomeComponent,HomeJumbotronComponent,HomeOwnedServiceComponent, MenuComponent];
+  export const routingComponents = [HomeComponent,HomeJumbotronComponent,HomeOwnedServiceComponent, MenuComponent, NgbdModalBasic];
