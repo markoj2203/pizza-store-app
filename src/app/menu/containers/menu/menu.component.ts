@@ -13,6 +13,8 @@ import * as moment from 'moment';
 export class MenuComponent implements OnInit {
 
   menuData:IEmenu[] = [];
+  menuDataWithIDs:any;
+  newRowData:any;
   name:any;
   closeResult = '';
   
@@ -28,12 +30,12 @@ export class MenuComponent implements OnInit {
       this.menuData = data.sort((a: any, b: any) => {
         return +new Date(b.date) - +new Date(a.date);
     });
-      const mappedEvents = this.menuData.map(item => {
+      const mappedEvents = this.menuData.map((item, i) => {
         moment(item.date).format('DD/MM/YY HH:mm'); 
-        item = { ...item, date: moment(item.date).format('DD/MM/YY HH:mm') };
+        item = {...item, date: moment(item.date).format('DD/MM/YY HH:mm') };
         return item;
       });
-
+      
       this.menuData = mappedEvents;
 
       return this.menuData;
@@ -69,8 +71,38 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  addRow(){
-    return this.menuData = [{name:"aaa",price:2,size:25,date:"05/02/21 14:50"}, ...this.menuData];
+addRow(formData:any){
+  
+  if(formData.form.status === "VALID"){
+    this.newRowData = {...formData.form.value, date:moment().format('DD/MM/YY HH:mm')}
+    this.menuData = [this.newRowData, ...this.menuData];
+    this.modalService.dismissAll();  
+  }
+  return this.menuData;
+}
+  editRow(content:any){
+    console.log(content);
+    this.open(content);
+  }
+
+  deleteRow(event:any){
+    let elementId: any = event.currentTarget.closest('tr').dataset.index; 
+    this.menuDataWithIDs = [];
+    this.menuDataWithIDs = this.menuData.map((item,i) => {
+      return {id:i, ...item };
+    });
+    for (var i = 0; i < this.menuDataWithIDs.length; i++) {
+      var obj = this.menuDataWithIDs[i];
+      if (obj.id.toString() === elementId) {
+        this.menuDataWithIDs.splice(i, 1);
+      }
+    }
+
+    return this.menuData =  this.menuDataWithIDs;
+  }
+
+  menuDataWithIndex(array:[]){
+    array.length;
   }
 
 }

@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 import { SearchComponent } from '../search/components/search.component';
+import { MenuFormComponent } from './containers/menu-form/menu-form.component';
 @NgModule({
-  declarations: [SearchComponent],
+  declarations: [SearchComponent, MenuFormComponent],
   imports: [
     CommonModule,
-    FormsModule, 
-    ReactiveFormsModule
-  ],exports:[SearchComponent]
+    FormsModule
+  ],exports:[SearchComponent,MenuFormComponent]
 })
 
 export class MenuModule { }

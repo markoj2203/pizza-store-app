@@ -1,3 +1,19 @@
 .btn {
   width: 100%;
 }
+.button-style {
+  width: 48%;
+  margin: 1%;
+}
+.form-buttons-container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+.form-buttons {
+  display: flex;
+  width: 30%;
+}
+.menu-table {
+  padding: 3.5rem;
+}

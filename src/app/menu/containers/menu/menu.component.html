@@ -1,20 +1,53 @@
-<div class="container mb-10">
-  <app-search></app-search>
+<div class="container mb-10" class="menu-table">
+  <!-- <app-search></app-search> -->
+
+  <div class="form-outline">
+    <input
+      type="search"
+      id="form1"
+      class="form-control"
+      placeholder="Search menu items"
+      aria-label="Search"
+      [(ngModel)]="name"
+      (ngModelChange)="Search()"
+    />
+  </div>
+
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">name</th>
-        <th scope="col">size</th>
-        <th scope="col">price</th>
-        <th scope="col">date added</th>
+        <th scope="col">Name</th>
+        <th scope="col">Size</th>
+        <th scope="col">Price</th>
+        <th scope="col">Date Added</th>
+        <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let menuItem of menuData">
+      <tr
+        *ngFor="let menuItem of menuData; let i = index"
+        [attr.data-index]="i"
+      >
         <td>{{ menuItem.name }}</td>
         <td>{{ menuItem.size }}</td>
         <td>{{ menuItem.price }}</td>
         <td>{{ menuItem.date }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-secondary button-style"
+            (click)="editRow(content)"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary button-style"
+            (click)="deleteRow($event)"
+          >
+            Delete
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -22,6 +55,8 @@
     Add
   </button>
   <ng-template #content let-modal>
+    <!-- <app-menu-form></app-menu-form> -->
+
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Add new item</h4>
       <button
@@ -34,53 +69,92 @@
       </button>
     </div>
     <div class="modal-body">
-      <form>
+      <form #tableForm="ngForm">
         <div class="form-group">
           <label for="formGroupExampleInput">Name:</label>
           <input
+            ngModel
             type="text"
             class="form-control"
-            id="pizzaName"
+            id="name"
             placeholder="Enter pizza name"
+            name="name"
+            #name="ngModel"
+            required
           />
+          <div class="alert alert-danger" *ngIf="name.touched && !name.valid">
+            This field is required
+          </div>
         </div>
+
         <div class="form-group">
           <label for="formGroupExampleInput2">Slug:</label>
           <input
+            ngModel
             type="text"
             class="form-control"
             id="pizzaSlug"
             placeholder="Enter pizza slug"
+            name="slug"
+            #slug="ngModel"
+            required
           />
+          <div class="alert alert-danger" *ngIf="slug.touched && !slug.valid">
+            This field is required
+          </div>
         </div>
         <div class="form-group">
           <label for="pizzaSize">Size:</label>
-          <select id="pizzaSize" class="form-control">
+          <select
+            ngModel
+            id="pizzaSize"
+            class="form-control"
+            name="size"
+            #size="ngModel"
+          >
             <option selected>Select pizza size</option>
             <option>23</option>
             <option>35</option>
             <option>50</option>
           </select>
+          <div class="alert alert-danger" *ngIf="size.touched && !size.valid">
+            This field is required
+          </div>
         </div>
         <div class="form-group">
           <label for="pizzaPrice">Price:</label>
           <input
+            ngModel
             type="number"
             class="form-control"
             id="pizzaPrice"
             placeholder="Enter pizza price"
+            name="price"
+            #price="ngModel"
           />
+          <div class="alert alert-danger" *ngIf="price.touched && !price.valid">
+            This field is required
+          </div>
         </div>
-        <button
-          type="button"
-          class="btn btn-light"
-          (click)="modal.dismiss('Cross click')"
-        >
-          Cancel
-        </button>
-        <button type="button" class="btn btn-primary" (click)="addRow()">
-          Add
-        </button>
+        <div class="form-buttons-container">
+          <div class="form-buttons">
+            <button
+              type="button"
+              class="btn btn-light"
+              (click)="modal.dismiss('Cross click')"
+            >
+              Cancel
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="addRow(tableForm)"
+            >
+              Add
+            </button>
+          </div>
+        </div>
       </form>
     </div>
   </ng-template>
