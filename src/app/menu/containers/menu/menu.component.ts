@@ -25,8 +25,9 @@ export class MenuComponent implements OnInit {
   getData(){
     this._menuService.getMenuData()
     .subscribe(data => {
-      this.menuData = data;
-
+      this.menuData = data.sort((a: any, b: any) => {
+        return +new Date(b.date) - +new Date(a.date);
+    });
       const mappedEvents = this.menuData.map(item => {
         moment(item.date).format('DD/MM/YY HH:mm'); 
         item = { ...item, date: moment(item.date).format('DD/MM/YY HH:mm') };
@@ -66,6 +67,10 @@ export class MenuComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  addRow(){
+    return this.menuData = [{name:"aaa",price:2,size:25,date:"05/02/21 14:50"}, ...this.menuData];
   }
 
 }
