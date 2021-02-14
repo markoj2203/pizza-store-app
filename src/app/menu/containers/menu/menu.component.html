@@ -43,7 +43,7 @@
           <button
             type="button"
             class="btn btn-secondary button-style"
-            (click)="deleteRow($event)"
+            (click)="deleteRow(i)"
           >
             Delete
           </button>
@@ -51,7 +51,11 @@
       </tr>
     </tbody>
   </table>
-  <button type="button" class="btn btn-primary" (click)="open(content)">
+  <button
+    type="button"
+    class="btn btn-primary"
+    (click)="openModalForm(content)"
+  >
     Add
   </button>
   <ng-template #content let-modal>
@@ -73,14 +77,14 @@
         <div class="form-group">
           <label for="formGroupExampleInput">Name:</label>
           <input
-            ngModel
             type="text"
             class="form-control"
             id="name"
-            placeholder="Enter pizza name"
+            placeholder="Enter pizza name Test"
             name="name"
             #name="ngModel"
             required
+            [ngModel]="tableDataOject.name"
           />
           <div class="alert alert-danger" *ngIf="name.touched && !name.valid">
             This field is required
@@ -90,15 +94,14 @@
         <div class="form-group">
           <label for="formGroupExampleInput2">Slug:</label>
           <input
-            ngModel
             type="text"
             class="form-control"
             id="pizzaSlug"
             placeholder="Enter pizza slug"
             name="slug"
             #slug="ngModel"
-            ng-value="name"
             required
+            [ngModel]="tableDataOject.slug"
           />
           <div class="alert alert-danger" *ngIf="slug.touched && !slug.valid">
             This field is required
@@ -107,12 +110,11 @@
         <div class="form-group">
           <label for="pizzaSize">Size:</label>
           <select
-            ngModel
             id="pizzaSize"
             class="form-control"
             name="size"
             #size="ngModel"
-            ng-value="name"
+            [ngModel]="tableDataOject.size"
           >
             <option selected>Select pizza size</option>
             <option>23</option>
@@ -126,14 +128,14 @@
         <div class="form-group">
           <label for="pizzaPrice">Price:</label>
           <input
-            ngModel
             type="number"
             class="form-control"
             id="pizzaPrice"
             placeholder="Enter pizza price"
             name="price"
             #price="ngModel"
-            ng-value="name"
+            required
+            [ngModel]="tableDataOject.price"
           />
           <div class="alert alert-danger" *ngIf="price.touched && !price.valid">
             This field is required
@@ -153,8 +155,17 @@
               type="button"
               class="btn btn-primary"
               (click)="addRow(tableForm)"
+              *ngIf="this.btnSwitch === 'Add'"
             >
               Add
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="updateRow(tableForm)"
+              *ngIf="this.btnSwitch === 'Update'"
+            >
+              Update
             </button>
           </div>
         </div>

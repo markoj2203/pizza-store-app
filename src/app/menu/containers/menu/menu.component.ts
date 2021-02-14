@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../menu.service';
 import { IEmenu } from '../../model/IEmenu';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {FormBuilder} from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -17,11 +16,24 @@ export class MenuComponent implements OnInit {
   newRowData:any;
   name:any;
   closeResult = '';
+  tableDataOject:any;
+  btnSwitch:string = 'Add';
+  rowNum:number = 0;
   
-  constructor( private formBuilder: FormBuilder,private modalService: NgbModal, private _menuService: MenuService) { }
+  constructor(private modalService: NgbModal, private _menuService: MenuService) { }
 
   ngOnInit(): void {
     this.getData();
+    this.objectEmtyStructure();
+  }
+
+  objectEmtyStructure(){
+    this.tableDataOject = {
+      name:'',
+      slug:'',
+      size:'',
+      price:''
+    }
   }
 
   getData(){
@@ -53,6 +65,12 @@ export class MenuComponent implements OnInit {
     }
   }
 
+  openModalForm(content:any){
+    this.btnSwitch = 'Add';
+      this.objectEmtyStructure();
+      this.open(content);
+  }
+
   open(content:any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -72,7 +90,6 @@ export class MenuComponent implements OnInit {
   }
 
 addRow(formData:any){
-  
   if(formData.form.status === "VALID"){
     this.newRowData = {...formData.form.value, date:moment().format('DD/MM/YY HH:mm')}
     this.menuData = [this.newRowData, ...this.menuData];
@@ -81,21 +98,34 @@ addRow(formData:any){
   return this.menuData;
 }
   editRow(content:any, i:number){
-    console.log(i);
-    console.log(this.menuData[i]);
-
+    this.rowNum = i;
+    this.tableDataOject = this.menuData[i];
+    this.btnSwitch = 'Update';
     this.open(content);
   }
-
-  deleteRow(event:any){
-    let elementId: any = event.currentTarget.closest('tr').dataset.index; 
+  updateRow(formData:any){
+    if(formData.form.status === "VALID"){
+      this.newRowData = {...formData.form.value, date:moment().format('DD/MM/YY HH:mm')}
+      for (let index = 0; index < this.menuData.length; index++) {
+        if(index === this.rowNum){
+          this.menuData[index] = this.newRowData;
+        };  
+      }
+      this.menuData.sort((a: any, b: any) => {
+        return +new Date(b.date) - +new Date(a.date);
+    });
+      this.modalService.dismissAll();  
+    }
+    return this.menuData;
+  }
+  deleteRow(elementId:number){
     this.menuDataWithIDs = [];
     this.menuDataWithIDs = this.menuData.map((item,i) => {
       return {id:i, ...item };
     });
     for (var i = 0; i < this.menuDataWithIDs.length; i++) {
       var obj = this.menuDataWithIDs[i];
-      if (obj.id.toString() === elementId) {
+      if (obj.id === elementId) {
         this.menuDataWithIDs.splice(i, 1);
       }
     }
