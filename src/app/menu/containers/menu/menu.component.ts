@@ -35,7 +35,7 @@ export class MenuComponent implements OnInit {
       price:''
     }
   }
-
+//get async data from service - MenuService 
   getData(){
     this._menuService.getMenuData()
     .subscribe(data => {
@@ -49,28 +49,15 @@ export class MenuComponent implements OnInit {
       });
       
       this.menuData = mappedEvents;
-
-      return this.menuData;
-
     });
   }
-  
-  Search(){
-    if(this.name == ""){
-      this.ngOnInit();
-    }else{
-      this.menuData = this.menuData.filter(res => {
-        return res.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase());
-      });
-    }
-  }
-
+  //helper function for open modal
   openModalForm(content:any){
     this.btnSwitch = 'Add';
       this.objectEmtyStructure();
       this.open(content);
   }
-
+//open modal and pass some content
   open(content:any) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -78,7 +65,7 @@ export class MenuComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-
+//modal dismiss reason
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -88,7 +75,7 @@ export class MenuComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
+//add new row in the table
 addRow(formData:any){
   if(formData.form.status === "VALID"){
     this.newRowData = {...formData.form.value, date:moment().format('DD/MM/YY HH:mm')}
@@ -97,12 +84,14 @@ addRow(formData:any){
   }
   return this.menuData;
 }
+//edit row from the table
   editRow(content:any, i:number){
     this.rowNum = i;
     this.tableDataOject = this.menuData[i];
     this.btnSwitch = 'Update';
     this.open(content);
   }
+  //Update data in table
   updateRow(formData:any){
     if(formData.form.status === "VALID"){
       this.newRowData = {...formData.form.value, date:moment().format('DD/MM/YY HH:mm')}
@@ -116,8 +105,8 @@ addRow(formData:any){
     });
       this.modalService.dismissAll();  
     }
-    //return this.menuData;
   }
+  //Delete row data from table
   deleteRow(elementId:number){
     this.menuDataWithIDs = [];
     this.menuDataWithIDs = this.menuData.map((item,i) => {
@@ -128,9 +117,18 @@ addRow(formData:any){
       if (obj.id === elementId) {
         this.menuDataWithIDs.splice(i, 1);
       }
-    }
-    
+    }    
     return this.menuData =  this.menuDataWithIDs;
+  }
+  //Geting search result for typing value
+  Search(){
+    if(this.name == ""){
+      this.ngOnInit();
+    }else{
+      this.menuData = this.menuData.filter(res => {
+        return res.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase());
+      });
+    }
   }
 
 }

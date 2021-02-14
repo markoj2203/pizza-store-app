@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { MenuService} from './menu/menu.service';
+import { SearchService} from './search/search.service';
 import { FormsModule } from '@angular/forms';
 import { MenuModule } from './menu/menu.module';
 
@@ -28,7 +29,7 @@ import { MenuModule } from './menu/menu.module';
     FormsModule,
     MenuModule
   ],
-
+  providers:[MenuService,SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

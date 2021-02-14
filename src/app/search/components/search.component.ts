@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../menu/menu.service';
+import { SearchService } from '../search.service';
 import { IEmenu } from '../../menu//model/IEmenu';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -15,7 +16,7 @@ export class SearchComponent implements OnInit {
   menuData:IEmenu[] = [];
   name:any;
   
-  constructor(private _menuService: MenuService) { }
+  constructor(private _service:SearchService, private _menuService: MenuService) { }
 
 
   ngOnInit(): void {
@@ -40,16 +41,13 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  
-    Search(){
-      if(this.name == ""){
-        this.ngOnInit();
-      }else{
-        this.menuData = this.menuData.filter(res => {
-          console.log(this.name.toLocaleLowerCase());
-          return res.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase());
-        });
-      }
-    }
+  sendSearchToService(name:any){
+    this._service.setSearch(name);
+}
+
+  Search(){
+    return this._service.Search();
+  }
+
   
 }

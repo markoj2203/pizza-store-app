@@ -6,6 +6,6 @@
     placeholder="Search menu items"
     aria-label="Search"
     [(ngModel)]="name"
-    (ngModelChange)="Search()"
+    (ngModelChange)="sendSearchToService(name)"
   />
 </div>
