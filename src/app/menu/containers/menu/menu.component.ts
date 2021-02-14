@@ -116,7 +116,7 @@ addRow(formData:any){
     });
       this.modalService.dismissAll();  
     }
-    return this.menuData;
+    //return this.menuData;
   }
   deleteRow(elementId:number){
     this.menuDataWithIDs = [];
@@ -129,12 +129,8 @@ addRow(formData:any){
         this.menuDataWithIDs.splice(i, 1);
       }
     }
-
+    
     return this.menuData =  this.menuDataWithIDs;
-  }
-
-  menuDataWithIndex(array:[]){
-    array.length;
   }
 
 }

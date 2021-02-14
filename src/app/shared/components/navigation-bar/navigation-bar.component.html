@@ -3,16 +3,12 @@
 
   <ul class="navbar-nav mr-auto">
     <li class="nav-item">
-      <a
-        class="nav-link"
-        [ngClass]="classCheck == true ? 'active' : ''"
-        (click)="toggleClass($event)"
-        routerLink="home"
+      <a class="nav-link" routerLink="home" [routerLinkActive]="'active'"
         >Home</a
       >
     </li>
     <li class="nav-item">
-      <a class="nav-link" (click)="toggleClass($event)" routerLink="menu"
+      <a class="nav-link" routerLink="menu" [routerLinkActive]="'active'"
         >Menu</a
       >
     </li>
