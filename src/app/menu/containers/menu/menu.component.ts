@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../menu.service';
 import { IEmenu } from '../../model/IEmenu';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {FormBuilder} from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -11,14 +12,13 @@ import * as moment from 'moment';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit {
-
   menuData:IEmenu[] = [];
   menuDataWithIDs:any;
   newRowData:any;
   name:any;
   closeResult = '';
   
-  constructor(private modalService: NgbModal, private _menuService: MenuService) { }
+  constructor( private formBuilder: FormBuilder,private modalService: NgbModal, private _menuService: MenuService) { }
 
   ngOnInit(): void {
     this.getData();
@@ -80,8 +80,10 @@ addRow(formData:any){
   }
   return this.menuData;
 }
-  editRow(content:any){
-    console.log(content);
+  editRow(content:any, i:number){
+    console.log(i);
+    console.log(this.menuData[i]);
+
     this.open(content);
   }
 

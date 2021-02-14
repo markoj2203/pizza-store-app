@@ -36,7 +36,7 @@
           <button
             type="button"
             class="btn btn-secondary button-style"
-            (click)="editRow(content)"
+            (click)="editRow(content, i)"
           >
             Edit
           </button>
@@ -97,6 +97,7 @@
             placeholder="Enter pizza slug"
             name="slug"
             #slug="ngModel"
+            ng-value="name"
             required
           />
           <div class="alert alert-danger" *ngIf="slug.touched && !slug.valid">
@@ -111,6 +112,7 @@
             class="form-control"
             name="size"
             #size="ngModel"
+            ng-value="name"
           >
             <option selected>Select pizza size</option>
             <option>23</option>
@@ -131,6 +133,7 @@
             placeholder="Enter pizza price"
             name="price"
             #price="ngModel"
+            ng-value="name"
           />
           <div class="alert alert-danger" *ngIf="price.touched && !price.valid">
             This field is required
