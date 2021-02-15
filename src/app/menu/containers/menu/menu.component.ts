@@ -22,6 +22,7 @@ export class MenuComponent implements OnInit {
   btnSwitch:string = 'Add';
   rowNum:number = 0;
   tableForm:any;
+  formStatus:string = 'VALID';
   
   log(x:any){console.log(x)}
 
@@ -89,7 +90,9 @@ export class MenuComponent implements OnInit {
   }
 //add new row in the table
 addRow(formData:any){
-  if(formData.form.status === "VALID"){
+  this.formStatus = formData.form.status;
+  
+  if(this.formStatus == "VALID"){
     this.newRowData = {...formData.form.value, date:moment().format('DD/MM/YY HH:mm')}
     this.menuData = [this.newRowData, ...this.menuData];
     this.modalService.dismissAll();  
