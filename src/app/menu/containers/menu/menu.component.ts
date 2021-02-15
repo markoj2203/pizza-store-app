@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../menu.service';
 import { IEmenu } from '../../model/IEmenu';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -15,23 +16,34 @@ export class MenuComponent implements OnInit {
   menuDataWithIDs:any;
   newRowData:any;
   name:any;
+  price:any;
   closeResult = '';
   tableDataOject:any;
   btnSwitch:string = 'Add';
   rowNum:number = 0;
+  tableForm:any;
   
+  log(x:any){console.log(x)}
+
   constructor(private modalService: NgbModal, private _menuService: MenuService) { }
 
   ngOnInit(): void {
     this.getData();
     this.objectEmtyStructure();
+    this.tableForm = new FormGroup({
+      name: new FormControl(this.name, [
+        Validators.required,
+        Validators.minLength(4),
+      ])
+    });
   }
+  
 
   objectEmtyStructure(){
     this.tableDataOject = {
       name:'',
       slug:'',
-      size:'',
+      size:'Select pizza size',
       price:''
     }
   }

@@ -13,7 +13,7 @@
     />
   </div>
 
-  <table class="table">
+  <table class="table table-bordered">
     <thead>
       <tr>
         <th scope="col">Name</th>
@@ -33,27 +33,29 @@
         <td>{{ menuItem.price }}</td>
         <td>{{ menuItem.date }}</td>
         <td>
-          <button
-            type="button"
-            class="btn btn-secondary button-style"
-            (click)="editRow(content, i)"
-          >
-            Edit
-          </button>
-          <button
-            type="button"
-            class="btn btn-secondary button-style"
-            (click)="deleteRow(i)"
-          >
-            Delete
-          </button>
+          <div class="button-group-table">
+            <button
+              type="button"
+              class="btn btn-secondary button-style"
+              (click)="editRow(content, i)"
+            >
+              Edit
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary button-style"
+              (click)="deleteRow(i)"
+            >
+              Delete
+            </button>
+          </div>
         </td>
       </tr>
     </tbody>
   </table>
   <button
     type="button"
-    class="btn btn-primary"
+    class="btn btn-primary button-add-pos"
     (click)="openModalForm(content)"
   >
     Add
@@ -116,7 +118,7 @@
             #size="ngModel"
             [ngModel]="tableDataOject.size"
           >
-            <option selected>Select pizza size</option>
+            <option selected="selected">Select pizza size</option>
             <option>23</option>
             <option>35</option>
             <option>50</option>

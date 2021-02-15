@@ -17,3 +17,30 @@
 .menu-table {
   padding: 3.5rem;
 }
+
+.table {
+  margin-top: 2rem;
+}
+
+.button-add-pos {
+  margin-top: 2rem;
+}
+
+.button-group-table {
+  display: flex;
+  width: 100%;
+}
+.td-style {
+  text-align: center;
+}
+@media (max-width: 670px) {
+  .button-group-table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .button-style {
+    width: 98%;
+    margin: 1%;
+  }
+}
