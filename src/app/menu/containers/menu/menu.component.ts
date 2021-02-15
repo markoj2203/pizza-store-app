@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MenuService } from '../../menu.service';
 import { IEmenu } from '../../model/IEmenu';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators} from '@angular/forms';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
@@ -17,29 +16,23 @@ export class MenuComponent implements OnInit {
   newRowData:any;
   name:any;
   price:any;
+  slugMatch:any;
+  slugCheck:boolean = false;
   closeResult = '';
   tableDataOject:any;
   btnSwitch:string = 'Add';
   rowNum:number = 0;
   tableForm:any;
   formStatus:string = 'VALID';
+  popupHeader:string = 'Add new item';
   
-  log(x:any){console.log(x)}
-
   constructor(private modalService: NgbModal, private _menuService: MenuService) { }
 
   ngOnInit(): void {
     this.getData();
     this.objectEmtyStructure();
-    this.tableForm = new FormGroup({
-      name: new FormControl(this.name, [
-        Validators.required,
-        Validators.minLength(4),
-      ])
-    });
   }
   
-
   objectEmtyStructure(){
     this.tableDataOject = {
       name:'',
@@ -65,9 +58,12 @@ export class MenuComponent implements OnInit {
     });
   }
   //helper function for open modal
-  openModalForm(content:any){
-    this.btnSwitch = 'Add';
+  openModalForm(content:any,headerCheck:any){
+    this.popupHeader = headerCheck ==='edit'? 'Edit item' : 'Add new item';
+    if(headerCheck!=='edit'){
+      this.btnSwitch = 'Add';
       this.objectEmtyStructure();
+    }
       this.open(content);
   }
 //open modal and pass some content
@@ -90,7 +86,7 @@ export class MenuComponent implements OnInit {
   }
 //add new row in the table
 addRow(formData:any){
-  this.formStatus = formData.form.status;
+  this.formStatus = formData.form.status; 
   
   if(this.formStatus == "VALID"){
     this.newRowData = {...formData.form.value, date:moment().format('DD/MM/YY HH:mm')}
@@ -104,7 +100,7 @@ addRow(formData:any){
     this.rowNum = i;
     this.tableDataOject = this.menuData[i];
     this.btnSwitch = 'Update';
-    this.open(content);
+    this.openModalForm(content, 'edit');
   }
   //Update data in table
   updateRow(formData:any){
@@ -144,6 +140,15 @@ addRow(formData:any){
         return res.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase());
       });
     }
+  }
+  //check for slug format
+  slugFormat(){
+    this.slugCheck = false;
+    this.menuData.map(item =>{
+      if(item.slug === this.slugMatch.toLocaleLowerCase()){
+        this.slugCheck = true;
+      }
+    })
   }
 
 }

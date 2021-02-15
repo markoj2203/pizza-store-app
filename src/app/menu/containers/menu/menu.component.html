@@ -56,7 +56,7 @@
   <button
     type="button"
     class="btn btn-primary button-add-pos"
-    (click)="openModalForm(content)"
+    (click)="openModalForm(content, 'add')"
   >
     Add
   </button>
@@ -64,7 +64,7 @@
     <!-- <app-menu-form></app-menu-form> -->
 
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Add new item</h4>
+      <h4 class="modal-title" id="modal-basic-title">{{ popupHeader }}</h4>
       <button
         type="button"
         class="close"
@@ -106,7 +106,11 @@
             [ngModel]="tableDataOject.slug"
           />
           <div class="alert alert-danger" *ngIf="slug.touched && !slug.valid">
-            This field is required
+            <div *ngIf="slug.errors?.required">This field is required</div>
+            <div *ngIf="slug.errors?.format">Invalid slug format</div>
+          </div>
+          <div class="alert alert-danger" *ngIf="slugCheck === true">
+            Slug already in use
           </div>
         </div>
         <div class="form-group">
@@ -138,9 +142,12 @@
             #price="ngModel"
             required
             [ngModel]="tableDataOject.price"
+            pattern="^(([1-9]+([.][0-9]+)?)|(0[.][0-9]*[1-9]))$"
+            min="0.01"
           />
           <div class="alert alert-danger" *ngIf="price.touched && !price.valid">
-            This field is required
+            <div *ngIf="price.errors?.required">This field is required</div>
+            <div *ngIf="price.errors?.pattern">Minimal price is 0.01</div>
           </div>
         </div>
         <div class="form-buttons-container">
